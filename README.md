@@ -15,7 +15,9 @@ Usage
 ============
 
 Template::
+
     {% load yandexmaps_tags %}
+
     {% yandex_map_by_address object.get_address object.title 500,300 %}
 
 Demo

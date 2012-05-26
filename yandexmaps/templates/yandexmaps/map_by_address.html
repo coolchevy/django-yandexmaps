@@ -1,0 +1,23 @@
+<script src="http://api-maps.yandex.ru/1.1/index.xml?key={{API_KEY}}" type="text/javascript"></script>
+<script type="text/javascript">
+var map, geoResult;
+YMaps.jQuery(function () {
+    map = new YMaps.Map(YMaps.jQuery("#YMapsID")[0]);
+    var geocoder = new YMaps.Geocoder('{{address}}', {results: 1, boundedBy: map.getBounds()});
+    YMaps.Events.observe(geocoder, geocoder.Events.Load, function () {
+        if (this.length()) {
+            geoResult = this.get(0);
+            map.setBounds(geoResult.getBounds());
+    var placemark = new YMaps.Placemark(geoResult.getGeoPoint());
+    placemark.name = "{{title}}";
+    placemark.description = "{{address}}";
+    map.addOverlay(placemark);
+    placemark.openBalloon();
+        }
+    });
+    map.addControl(new YMaps.TypeControl());
+    map.addControl(new YMaps.Zoom());
+    map.addCopyright('{{copyright}}');
+});
+</script>
+<div id="YMapsID" style="width:{{map_width}}px;height:{{map_height}}px;"></div>
